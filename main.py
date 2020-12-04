@@ -14,6 +14,11 @@ class Tank:
         r = sqrt(volume / length / pi)
         return r
 
+    @staticmethod
+    def get_volume(length, radius):
+        volume = pi*radius**2*length+4/3*pi*radius**3
+        return volume
+
 
 R = 1
 t_1 = 1e-3
@@ -23,3 +28,4 @@ L = 2
 tank = Tank(R, L, t_1, t_2, V)
 print(tank.radius)
 print(tank.get_radius(V, L))
+print(tank.get_volume(L, V))
