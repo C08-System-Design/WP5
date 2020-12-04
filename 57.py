@@ -20,4 +20,7 @@ Note that the units are:
 m_p = [g]
 v_p = [km/s]
 rho_p = [grams/cm3]
+
+Run this function for every projectile type, append results to a list, run
+max(list) to get the sufficient penetration thickness. 
 """
