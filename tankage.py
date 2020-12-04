@@ -62,7 +62,8 @@ while b_l <= 1.024-0.1 and h <= 3.540: # limit beam to give the tank a radius of
     b_l += 0.001
 
 print(t_lst)
-
+print("A",L_lst)
+L_a = L_lst
 
 
 
