@@ -1,27 +1,21 @@
 import sys
 import math
-from tankage import R_lst, t_lst, L_lst
+from D52 import R_lst, t_lst, L_lst
 
 m_fuel = 180  #kg
 
-#print("RtL",R_lst[0],t_lst[0],L_lst[0])    #checkif list imported correctly
-V = 0.179 #m^3      #volume of tank
 
 #material property needed to added
 E_mat = 78*(10**9) #pa
 rho = 2700 #kg/m^3
 v = 0.3
 
-p = 2.4 * (10**6) * 1.25    #Pa inside pressure
+p = 2.4 * (10**6) * 1.25    #Pa inside pressure, 1.25 margin
 
 
-R_list = R_lst #test
+R_list = R_lst
 t_1_list = t_lst
 L_list = L_lst
-#for c in range(1,10): #test
-    #R_list.append(c/10)
-    #t_1_list.append(c/1000)
-    #L_list.append(c)
 
 L_viable = []
 R_viable = []
