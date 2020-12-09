@@ -4,13 +4,16 @@ from tankage import R_lst, t_lst, L_lst
 
 m_fuel = 180  #kg
 
-print("RtL",R_lst[0],t_lst[0],L_lst[0])
-print(R_lst[0])
-V = 0.179 #m^3
+#print("RtL",R_lst[0],t_lst[0],L_lst[0])    #checkif list imported correctly
+V = 0.179 #m^3      #volume of tank
+
+#material property needed to added
 E_mat = 78*(10**9) #pa
-p = 2.4 * (10**6) * 1.25#pa
 rho = 2700 #kg/m^3
 v = 0.3
+
+p = 2.4 * (10**6) * 1.25    #Pa inside pressure
+
 
 R_list = R_lst #test
 t_1_list = t_lst
@@ -44,9 +47,10 @@ for i in range(0, len(R_list)):
     #sigma_cr_m_2 = sigma_cr_2/1000000      #in MPa
 
     f = 9.81 * 7.5 * 3.2175 * m         #WP4 2.2.2
-    sigma_applied = f/(2*math.pi*r*t)       #normal stress for thin 
+    sigma_applied = f/(2*math.pi*r*t)       #normal stress for thin wall
 
-    print(sigma_cr_1/sigma_applied, sigma_cr_2/sigma_applied)
+    #(sigma_cr_1/sigma_applied, sigma_cr_2/sigma_applied)
+    #if both lower then added to viable
     if sigma_cr_1 > sigma_applied and sigma_cr_2 > sigma_applied:
             L_viable.append(L)
             R_viable.append(r)
@@ -57,6 +61,7 @@ for i in range(0, len(R_list)):
 #print(t_viable)
 #print(m_viable)
 
+#optimum mass solution
 m_opt = min(m_viable)
 m_opt_index = m_viable.index(m_opt)
 L_opt = L_viable[m_opt_index]
@@ -64,5 +69,7 @@ R_opt = R_viable[m_opt_index]
 t_opt = t_viable[m_opt_index]
 
 #print(m_opt,L_opt,R_opt,t_opt)
-print(len(L_lst))
-print(len(L_viable))
+
+#check number of original and filtered
+#print(len(L_lst))
+#print(len(L_viable))
