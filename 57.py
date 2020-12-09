@@ -7,6 +7,7 @@ def get_t(k, mp, vp, rhop):  # function for projectile penetration depth t
 
 
 K = 0.7  # provided in the reader, true for most metals, therefore out surfaces
+
 """
 Run the above function for possible projectile masses (m_p), impact velocities
 (v_p) and projectile densities (rho_p). The coefficient K is held constant

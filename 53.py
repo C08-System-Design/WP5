@@ -1,6 +1,5 @@
-'''
 from math import *
-'''
+
 V = 0.179 #m^3
 E_mat = 78*(10**9) #pa
 sigma_y = 490 #Mpa
