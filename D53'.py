@@ -6,6 +6,7 @@ from mat import A2195_T84 as mat
 def buckling_opt(m_fuel, R_lst, t_lst, L_lst, mat):
     # material property needed to added
     E_mat = mat.get("E")*10**9
+    sigmay = mat.get("sigma_y")*10**6
     rho = mat.get("rho")
     v = mat.get("nu")
 
@@ -35,9 +36,12 @@ def buckling_opt(m_fuel, R_lst, t_lst, L_lst, mat):
                     (E_mat * t) / (r * math.sqrt(1 - v ** 2) * math.sqrt(3)))
 
         f = 9.81 * 7.5 * 3.2175 * m  # WP4 2.2.2
+
+
         sigma_applied = f / (2 * math.pi * r * t)  # normal stress for thin wall
+
         # if both lower then added to viable
-        if sigma_cr_1 > sigma_applied and sigma_cr_2 > sigma_applied:
+        if sigma_cr_1 > sigma_applied and sigma_cr_2 > sigma_applied and sigma_applied < sigmay:
             L_viable.append(L)
             R_viable.append(r)
             t_viable.append(t)
@@ -53,6 +57,8 @@ def buckling_opt(m_fuel, R_lst, t_lst, L_lst, mat):
     config = (m_viable, L_viable, R_viable, t_viable)   #all accepted configs
     return [config_opt, config, (len(L_lst)-len(L_viable))]
 
+a = buckling_opt(180,R_lst, t_lst, L_lst, mat)
+print(a[0])
 '''
 the returned list
 [0] is optimum config for this buckling check only in [m_opt, L_opt, R_opt, t_opt]
