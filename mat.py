@@ -32,7 +32,7 @@ A2195_T84 = \
      "sigma_y": 490,  # Yield strength in MPa
      "alpha": 22.7*10**(-6),  # Strain per kelvin (guess for now)
      "ratio": 0.55,  # SYS = approx k * sigma_y
-     "nu": 0.3 #poisson ratio
+     "nu": 0.3  # poisson ratio
      }
 # NAISI Grade 18Ni (350) Maraging Steel
 Steel = \
