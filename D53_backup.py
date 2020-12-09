@@ -39,7 +39,7 @@ def buckling_opt(m_fuel, R_lst, t_lst, L_lst, mat):
 
 
         sigma_applied = f / (2 * math.pi * r * t)  # normal stress for thin wall
-
+        print(sigma_applied/sigma_cr_1,"   ",sigma_applied/sigma_cr_2)
         # if both lower then added to viable
         if sigma_cr_1 > sigma_applied and sigma_cr_2 > sigma_applied and sigma_applied < sigmay:
             L_viable.append(L)

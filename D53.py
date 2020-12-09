@@ -41,6 +41,7 @@ def check_config(r, t, L):
     check = True
     if get_sigma_cr_applied(r, t, L) > get_sigma_cr_column(r, t,L) or get_sigma_cr_applied(r, t, L) > get_sigma_cr_shell(r, t):
         check = False
+    print(get_sigma_cr_applied(r, t, L) / get_sigma_cr_shell(r, t), "     ",get_sigma_cr_applied(r, t, L) / get_sigma_cr_column(r, t, L))
     return check
 
 #find the optimum config (lightest)
@@ -56,6 +57,8 @@ def buckling_opt(mass_fuel, R_lst, t_lst, L_lst, mat):
     global E_mat, rho, v, p, m_fuel
     m_fuel = mass_fuel
     E_mat = mat.get("E") * 10 ** 9
+    print(E_mat)
+
     rho = mat.get("rho")
     v = mat.get("nu")
 
