@@ -1,7 +1,8 @@
 import sys
-L_lst = []
 import math
 from tankage import R_lst, t_lst, L_lst
+
+m_fuel = 180  #kg
 
 print("RtL",R_lst[0],t_lst[0],L_lst[0])
 print(R_lst[0])
@@ -24,24 +25,26 @@ R_viable = []
 t_viable = []
 m_viable = []
 
-for i in range(0,len(R_list)):
+for i in range(0, len(R_list)):
     r = R_list[i]
     L = L_list[i]
     t = t_1_list[i]
     A = math.pi * (r**2)
-    m = (2*math.pi*r*t*L + 4*math.pi*t*(r**2))* rho + 180
-    I =  math.pi*r**3*t  #Only cylinder since its
+    m = (2*math.pi*r*t*L + 4*math.pi*t*(r**2))* rho + m_fuel
+    I = math.pi*r**3*t  #area moment of inertia
 
-
+    #column buckling
     sigma_cr_1 = (E_mat* I*((math.pi)**2))/(A* (L**2))
-    #sigma_cr_m_1 = sigma_cr_1/1000000
+    #sigma_cr_m_1 = sigma_cr_1/1000000      #in MPa
 
+
+    #shell buckling
     Q = (p/E_mat)*(r/t)**2
     sigma_cr_2 = (1.983-0.983*(math.exp(-23.14*Q)))*((E_mat*t)/(r*math.sqrt(1-v**2)*math.sqrt(3)))
-    #sigma_cr_m_2 = sigma_cr_2/1000000
+    #sigma_cr_m_2 = sigma_cr_2/1000000      #in MPa
 
-    f = 236.6 * m
-    sigma_applied = f/(2*math.pi*r*t)
+    f = 9.81 * 7.5 * 3.2175 * m         #WP4 2.2.2
+    sigma_applied = f/(2*math.pi*r*t)       #normal stress for thin 
 
     print(sigma_cr_1/sigma_applied, sigma_cr_2/sigma_applied)
     if sigma_cr_1 > sigma_applied and sigma_cr_2 > sigma_applied:
