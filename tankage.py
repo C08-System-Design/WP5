@@ -61,9 +61,6 @@ while b_l <= 1.024-0.1 and h <= 3.540: # limit beam to give the tank a radius of
     h = 2*r_o + get_L(r_o, get_t_axi(r_o, force, sigmay), get_t_cyl(p, r_o, sigmay),v)
     b_l += 0.001
 
-print(t_lst)
-print("A",L_lst)
-L_a = L_lst
 
 
 
