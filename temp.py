@@ -10,3 +10,4 @@ Q = (p / mat.get("E")*10**9) * (opt[2] / opt[3]) ** 2
 sigma_cr_2 = (1.983 - 0.983 * (math.exp(-23.14 * Q))) * (
         (mat.get("E")*10**9 * opt[3]) / (opt[2] * math.sqrt(1 - v ** 2) * math.sqrt(3)))
 print(sigma_cr_2/(1e6))
+print(opt[1])
