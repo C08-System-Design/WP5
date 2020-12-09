@@ -36,12 +36,12 @@ def get_t_axi(r_o, force, sigmay):
     t_axi = (force * (2*r_o))/(4*sigmay)      # propellant mass load (need to add the tank mass)
     return t_axi
 
-def get_t_final(t_axi, t_cyl):  # todo superposition the solutions
-    t_final = max(t_axi, t_cyl)
+def get_t_final(t_axi, t_cyl):
+    t_final = t_axi + t_cyl
     return t_final
 
 def get_L(r_o,t_axi,t_cyl,v):
-    r_i = r_o - max(t_axi, t_cyl)             # inner radius
+    r_i = r_o - get_t_final(t_axi, t_cyl)     # inner radius
     v_i = ((4)/(3))*math.pi*r_i**3            # inner volume from cylindrical end caps
     v_rest = v - v_i                          # volume still to fill
     L = v_rest/(math.pi*r_i**2)               # add volume with cylindrical part of tank
@@ -51,7 +51,7 @@ def get_L(r_o,t_axi,t_cyl,v):
 # replace arbitrary iteration for actual beam interval determination
 b_l = r_structure - get_initial_r(v)
 h = get_initial_r(v)*2
-while b_l <= 1.024-0.1 and h <= 3.540: # limit beam to give the tank a radius of at least 10 cm | height limited to 3.54 meters (height of the spacecraft)
+while b_l <= 1.024-0.1 and h <= 1.850: # limit beam to give the tank a radius of at least 10 cm | height limited to 3.54 meters (height of the spacecraft)
     r_o = r_structure - b_l  # todo fix the max height to 1.85
     R_lst.append(r_o)
     t_axi = get_t_axi(r_o, force, sigmay)
