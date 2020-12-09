@@ -41,17 +41,21 @@ def buckling_opt(m_fuel, R_lst, t_lst, L_lst, mat):
             L_viable.append(L)
             R_viable.append(r)
             t_viable.append(t)
-            m_viable.append(m)
+            m_viable.append(m-m_fuel)   #append only structure mass
+
     # optimum mass solution
     m_opt = min(m_viable)
     m_opt_index = m_viable.index(m_opt)
     L_opt = L_viable[m_opt_index]
     R_opt = R_viable[m_opt_index]
     t_opt = t_viable[m_opt_index]
-    config_opt = (m_opt, L_opt, R_opt, t_opt)
-    config = (m_viable, L_viable, R_viable, t_viable)
+    config_opt = (m_opt, L_opt, R_opt, t_opt)   #lightest config
+    config = (m_viable, L_viable, R_viable, t_viable)   #all accepted configs
     return [config_opt, config, (len(L_lst)-len(L_viable))]
 
-a = buckling_opt(180, R_lst, t_lst, L_lst,mat)
-
-print(a[2])
+'''
+the returned list
+[0] is optimum config for this buckling check only in [m_opt, L_opt, R_opt, t_opt]
+[1] is all the configurations pass the buckling check in [[m_viable], [L_viable], [R_viable], [t_viable]]
+[2] is the number of case rejected
+'''
