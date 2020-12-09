@@ -19,7 +19,7 @@ force = m_prop * a  # load due to propellant
 
 # output list initialisation
 R_lst = []          # radii
-t_lst = []         # thicknesses
+t_lst = []          # thicknesses
 L_lst = []          # length cylindrical part
 
 
