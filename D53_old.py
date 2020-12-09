@@ -1,9 +1,10 @@
 import sys
 import math
-from D52 import R_lst, t_lst, L_lst
+from D52 import R_lst, t_lst, L_lst, m_prop
 from mat import A2195_T84 as mat
 
-def buckling_opt(m_fuel, R_lst, t_lst, L_lst, mat):
+
+def buckling_opt(mprop, Rlst, tlst, Llst, mat):
     # material property needed to added
     E_mat = mat.get("E")*10**9
     rho = mat.get("rho")
@@ -11,9 +12,9 @@ def buckling_opt(m_fuel, R_lst, t_lst, L_lst, mat):
 
     p = 2.4 * (10 ** 6) * 1.25  # Pa inside pressure, 1.25 margin
 
-    R_list = R_lst
-    t_1_list = t_lst
-    L_list = L_lst
+    R_list = Rlst
+    t_1_list = tlst
+    L_list = Llst
     L_viable = []
     R_viable = []
     t_viable = []
@@ -24,7 +25,7 @@ def buckling_opt(m_fuel, R_lst, t_lst, L_lst, mat):
         L = L_list[i]
         t = t_1_list[i]
         A = math.pi * (r ** 2)
-        m = (2 * math.pi * r * t * L + 4 * math.pi * t * (r ** 2)) * rho + m_fuel
+        m = (2 * math.pi * r * t * L + 4 * math.pi * t * (r ** 2)) * rho + mprop
         I = math.pi * (r ** 3) * t  # area moment of inertia
         # column buckling
         sigma_cr_1 = (E_mat * I * ((math.pi) ** 2)) / (A * (L ** 2))
@@ -41,17 +42,23 @@ def buckling_opt(m_fuel, R_lst, t_lst, L_lst, mat):
             L_viable.append(L)
             R_viable.append(r)
             t_viable.append(t)
-            m_viable.append(m)
+            m_viable.append(m - mprop)   #append only structure mass
+
     # optimum mass solution
     m_opt = min(m_viable)
     m_opt_index = m_viable.index(m_opt)
     L_opt = L_viable[m_opt_index]
     R_opt = R_viable[m_opt_index]
     t_opt = t_viable[m_opt_index]
-    config_opt = (m_opt, L_opt, R_opt, t_opt)
-    config = (m_viable, L_viable, R_viable, t_viable)
-    return [config_opt, config, (len(L_lst)-len(L_viable))]
+    config_opt = (m_opt, L_opt, R_opt, t_opt)   #lightest config
+    config = (m_viable, L_viable, R_viable, t_viable)   #all accepted configs
+    return [config_opt, config, (len(Llst) - len(L_viable))]
 
-a = buckling_opt(180, R_lst, t_lst, L_lst,mat)
 
-print(a[2])
+x = buckling_opt(m_prop, R_lst, t_lst, L_lst, mat)
+'''
+the returned list
+[0] is optimum config for this buckling check only in [m_opt, L_opt, R_opt, t_opt]
+[1] is all the configurations pass the buckling check in [[m_viable], [L_viable], [R_viable], [t_viable]]
+[2] is the number of case rejected
+'''
