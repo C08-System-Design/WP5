@@ -12,7 +12,7 @@ v = 0.5
 R_list = R_lst #test
 t_1_list = t_lst
 L_list = L_lst
-print L_list
+print(L_list)
 #for c in range(1,10): #test
     #R_list.append(c/10)
     #t_1_list.append(c/1000)

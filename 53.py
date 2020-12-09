@@ -1,6 +1,5 @@
-'''
 from math import *
-'''
+
 V = 0.179 #m^3
 E_mat = 78*(10**9) #pa
 sigma_y = 490 #Mpa
@@ -8,7 +7,7 @@ p = 2.4 * (10**6) * 1.25#pa
 rho = 2700 #kg/m^3
 v = 0.5
 
-R_list =[0.18] #test
+R_list = [0.18] #test
 t_1_list = [0.005]
 L_list = [1.5]
 
