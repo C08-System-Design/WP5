@@ -19,7 +19,7 @@ force = m_prop * a  # load due to propellant
 
 # output list initialisation
 R_lst = []          # radii
-t_lst = []         # thicknesses
+t_lst = []          # thicknesses
 L_lst = []          # length cylindrical part
 
 
@@ -36,7 +36,7 @@ def get_t_axi(r_o, force, sigmay):
     t_axi = (force * (2*r_o))/(4*sigmay)      # propellant mass load (need to add the tank mass)
     return t_axi
 
-def get_t_final(t_axi, t_cyl):
+def get_t_final(t_axi, t_cyl):  # todo superposition the solutions
     t_final = max(t_axi, t_cyl)
     return t_final
 
@@ -52,7 +52,7 @@ def get_L(r_o,t_axi,t_cyl,v):
 b_l = r_structure - get_initial_r(v)
 h = get_initial_r(v)*2
 while b_l <= 1.024-0.1 and h <= 3.540: # limit beam to give the tank a radius of at least 10 cm | height limited to 3.54 meters (height of the spacecraft)
-    r_o = r_structure - b_l
+    r_o = r_structure - b_l  # todo fix the max height to 1.85
     R_lst.append(r_o)
     t_axi = get_t_axi(r_o, force, sigmay)
     t_cyl = get_t_cyl(p, r_o, sigmay)

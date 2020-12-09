@@ -45,7 +45,6 @@ for i in range(0,len(R_list)):
             t_viable.append(t)
             m_viable.append(m)
 
-
 print(L_viable)
 print(R_viable)
 print(t_viable)
