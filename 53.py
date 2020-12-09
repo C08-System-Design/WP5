@@ -7,7 +7,7 @@ p = 2.4 * (10**6) * 1.25#pa
 rho = 2700 #kg/m^3
 v = 0.5
 
-R_list =[0.18] #test
+R_list = [0.18] #test
 t_1_list = [0.005]
 L_list = [1.5]
 
