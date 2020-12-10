@@ -84,12 +84,13 @@ def buckling_opt(mass_fuel, R_lst, t_lst, L_lst, mat):
     filtered = len(R_lst) - len(R_viable)               #number of failing configs
     return [config, config_opt, filtered]
 
-a = buckling_opt(180,R_lst, t_lst, L_lst, mat)
-print(a[1]) #optimal config
-print(a[2]) #number of failing configs
 '''
 the returned list
 [0] is all the configurations pass the buckling check in [[m_viable], [L_viable], [R_viable], [t_viable]]
 [1] is optimum config for this buckling check only in [m_opt, L_opt, R_opt, t_opt]
 [2] is the number of case rejected
+
+a = buckling_opt(180,R_lst, t_lst, L_lst, mat)
+print(a[1]) #optimal config
+print(a[2]) #number of failing configs
 '''
