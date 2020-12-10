@@ -30,7 +30,7 @@ def get_sigma_cr_shell(r, t):
     sigma_cr_2 = (1.983 - 0.983 * (math.exp(-23.14 * Q))) * ((E_mat * t) / (r * math.sqrt(1 - v ** 2) * math.sqrt(3)))
     return sigma_cr_2
 
-#actural stress applied
+#actual stress applied
 def get_sigma_cr_applied(r, t, L):
     f = 9.81 * 7.5 * 3.2175 * (get_mass(r, t, L) + m_fuel)  # WP4 2.2.2
     sigma_applied = f / (2 * math.pi * r * t)
@@ -57,7 +57,7 @@ def buckling_opt(mass_fuel, R_lst, t_lst, L_lst, mat):
     global E_mat, rho, v, p, m_fuel
     m_fuel = mass_fuel
     E_mat = mat.get("E") * 10 ** 9
-    print(E_mat)
+
 
     rho = mat.get("rho")
     v = mat.get("nu")

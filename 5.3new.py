@@ -21,8 +21,7 @@ def get_mass(r, t, L):
 
 
 def get_sigma_cr_column(r, t, L):
-    sigma_cr_1 = (E_mat * get_I(r, t) * ((math.pi) * 2)) / (get_area(r) * (L * 2))
-    print(get_I(r, t) , get_area(r), L)
+    sigma_cr_1 = (E_mat * get_I(r, t) * ((math.pi) ** 2)) / (get_area(r) * (L ** 2))
     return sigma_cr_1
 
 
@@ -42,7 +41,6 @@ def check_config(r, t, L):
     check = True
     if get_sigma_cr_applied(r, t, L) > get_sigma_cr_column(r, t,L) or get_sigma_cr_applied(r, t, L) > get_sigma_cr_shell(r, t):
         check = False
-    #print(get_sigma_cr_applied(r, t, L)/get_sigma_cr_shell(r,t) , "     " , get_sigma_cr_applied(r, t, L)/get_sigma_cr_column(r, t, L))
     return check
 
 
@@ -87,4 +85,3 @@ a = buckling_opt(180,R_lst, t_lst, L_lst, mat)
 print(a[2])
 
 #print(buckling_opt(180,R_lst, t_lst, L_lst, mat)[0][3])
-print(E_mat)
