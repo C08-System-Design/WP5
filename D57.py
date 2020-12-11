@@ -1,6 +1,6 @@
 # --- Class Particle created --- #
 class Particle:
-    K = 0.7  # from the reader, true for most metals, therefore out surfaces
+    K = 0.7  # from the reader, true for most metals, therefore our surfaces
     _registry = []
 
     def __init__(self, name, m, v, rho):
@@ -19,6 +19,8 @@ class Particle:
 mm = Particle("Micrometeorite", 1e-9, 25, 1e-9/1.96e-7)
 sod = Particle("Small orbital debris", 5.2e-10*2700, 10, 2.7)
 mod = Particle("Medium orbital debris", 5.2e-4*2700, 10, 2.7)
+
+# --- Calculation --- #
 for i in Particle._registry:  # i being an instance of the Particle class
     print("The", i.name, "will need at least", round(i.get_t()*10, 3),
           "mm of penetration thickness")
