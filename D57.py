@@ -21,4 +21,4 @@ sod = Particle("Small orbital debris", 5.2e-10*2700, 10, 2.7)
 mod = Particle("Medium orbital debris", 5.2e-4*2700, 10, 2.7)
 for i in Particle._registry:  # i being an instance of the Particle class
     print("The", i.name, "will need at least", round(i.get_t()*10, 3),
-          "mm of wall thickness")
+          "mm of penetration thickness")
