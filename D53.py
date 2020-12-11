@@ -57,7 +57,7 @@ def get_opt(config):
 #filter list of configurations
 def buckling_opt(mass_total, R_lst, t_lst, L_lst, mat):
     global E_mat, rho, v, p, m_total
-    m_total = mass_total                #total mass of the propellant
+    m_total = mass_total                #total mass
     E_mat = mat.get("E") * 10 ** 9      #materials young's modulus
 
 
@@ -93,7 +93,7 @@ the returned list
 [1] is optimum config for this buckling check only in [m_opt, L_opt, R_opt, t_opt]
 [2] is the number of case rejected
 
-a = buckling_opt(180,R_lst, t_lst, L_lst, mat)
+a = buckling_opt(1590,R_lst, t_lst, L_lst, mat)
 print(a[1]) #optimal config
 print(a[2]) #number of failing configs
 '''
