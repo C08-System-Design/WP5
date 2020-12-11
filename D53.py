@@ -26,7 +26,8 @@ def get_sigma_cr_column(r, t, L):
 #shell buckling critical stress
 def get_sigma_cr_shell(r, t):
     Q = (p / E_mat) * (r / t) ** 2 #dimensionless variable for intermediate step
-    sigma_cr_2 = (1.983 - 0.983 * (math.exp(-23.14 * Q))) * ((E_mat * t) / (r * math.sqrt(1 - v ** 2) * math.sqrt(3)))
+    sigma_cr_2 = (1.983 - 0.983 * (math.exp(-23.14 * Q))) * ((E_mat * t) /
+                (r * math.sqrt(1 - v ** 2) * math.sqrt(3)))
     return sigma_cr_2
 
 #stress imposed by launch loads (compressive load at two ends)
@@ -49,7 +50,8 @@ def get_opt(config):
     masslist = config[3]                #masses
     opt_mass = min(masslist)            #lowest mass
     opt = masslist.index(opt_mass)      #index with lowest mass
-    opt_config = [config[0][opt], config[1][opt], config[2][opt], config[3][opt]] #radius thickness length and mass
+    # radius thickness length and mass
+    opt_config = [config[0][opt], config[1][opt], config[2][opt], config[3][opt]]
     return opt_config
 
 #filter list of configurations
@@ -95,7 +97,3 @@ a = buckling_opt(180,R_lst, t_lst, L_lst, mat)
 print(a[1]) #optimal config
 print(a[2]) #number of failing configs
 '''
-
-a = buckling_opt(1600,R_lst, t_lst, L_lst, mat)
-print(a[1]) #optimal config
-print(a[2]) #number of failing configs
