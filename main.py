@@ -1,4 +1,5 @@
 from math import pi, sqrt
+from D53 import *
 
 
 class Tank:
@@ -24,6 +25,8 @@ t_2 = 2e-3
 V = 0.18
 L = 2
 tank = Tank(R, L, t_1, t_2, V)
+m_prop = 180
+buckling_opt(m_prop, R_lst, t_lst, L_lst, mat)
 print(tank.radius)
 print(tank.get_radius())
 print(tank.get_volume())
