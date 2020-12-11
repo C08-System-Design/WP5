@@ -31,7 +31,7 @@ def get_sigma_cr_shell(r, t):
 
 #stress imposed by launch loads (compressive load at two ends)
 def get_sigma_cr_applied(r, t, L):
-    f = 9.81 * 7.5 * 3.2175 * (get_mass(r, t, L) + m_extra)  # WP4 2.2.2
+    f = 9.81 * 7.5 * 3.2175 * (get_mass(r, t, L) + m_total)  # WP4 2.2.2
     sigma_applied = f / (2 * math.pi * r * t)               #normal stress
     return sigma_applied
 
@@ -51,9 +51,9 @@ def get_opt(config):
     return opt_config
 
 #filter list of configurations
-def buckling_opt(mass_extra, R_lst, t_lst, L_lst, mat):
-    global E_mat, rho, v, p, m_extra
-    m_extra = mass_extra                #total mass of the propellant
+def buckling_opt(mass_total, R_lst, t_lst, L_lst, mat):
+    global E_mat, rho, v, p, m_total
+    m_total = mass_total                #total mass of the propellant
     E_mat = mat.get("E") * 10 ** 9      #materials young's modulus
 
 
