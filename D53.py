@@ -3,7 +3,6 @@ import math
 from D52 import R_lst, t_lst, L_lst
 from mat import A2195_T84 as mat
 
-
 #cross-sectional enclosed area
 def get_area(r):
     A = math.pi * (r ** 2)
@@ -32,7 +31,7 @@ def get_sigma_cr_shell(r, t):
 
 #stress imposed by launch loads (compressive load at two ends)
 def get_sigma_cr_applied(r, t, L):
-    f = 9.81 * 7.5 * 3.2175 * (get_mass(r, t, L) + m_fuel)  # WP4 2.2.2
+    f = 9.81 * 7.5 * 3.2175 * (get_mass(r, t, L) + m_extra)  # WP4 2.2.2
     sigma_applied = f / (2 * math.pi * r * t)               #normal stress
     return sigma_applied
 
@@ -52,9 +51,9 @@ def get_opt(config):
     return opt_config
 
 #filter list of configurations
-def buckling_opt(mass_fuel, R_lst, t_lst, L_lst, mat):
-    global E_mat, rho, v, p, m_fuel
-    m_fuel = mass_fuel                  #total mass of the propellant
+def buckling_opt(mass_extra, R_lst, t_lst, L_lst, mat):
+    global E_mat, rho, v, p, m_extra
+    m_extra = mass_extra                #total mass of the propellant
     E_mat = mat.get("E") * 10 ** 9      #materials young's modulus
 
 
@@ -94,3 +93,7 @@ a = buckling_opt(180,R_lst, t_lst, L_lst, mat)
 print(a[1]) #optimal config
 print(a[2]) #number of failing configs
 '''
+
+a = buckling_opt(1600,R_lst, t_lst, L_lst, mat)
+print(a[1]) #optimal config
+print(a[2]) #number of failing configs
