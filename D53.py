@@ -38,7 +38,9 @@ def get_sigma_cr_applied(r, t, L):
 #check if configuration fails
 def check_config(r, t, L):
     check = True
-    if get_sigma_cr_applied(r, t, L) > get_sigma_cr_column(r, t,L) or get_sigma_cr_applied(r, t, L) > get_sigma_cr_shell(r, t):
+    if get_sigma_cr_applied(r, t, L) > get_sigma_cr_column(r, t,L) or \
+            get_sigma_cr_applied(r, t, L) > get_sigma_cr_shell(r, t) or \
+            get_sigma_cr_applied(r, t, L) > mat.get("sigma_y")*1e6:
         check = False
     return check
 
