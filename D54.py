@@ -22,6 +22,7 @@ def angleLong(Fxy, Fz):                                 # angle at which the xyz
 
 def stress(sigma_y, alpha, A, Ixx, y_min, y_max):
     #length beam
+    global sigma_comb
     L = 0.774/cos(alpha)
     F_lat = linspace(-Fx, Fx, 5)
     y_arr = linspace(y_min, y_max, 11)
@@ -45,8 +46,12 @@ def stress(sigma_y, alpha, A, Ixx, y_min, y_max):
         sigma_comb = add(sigma_shear, sigma_axial) #comb stress 1D
         #define sigmatab!!!!
         sigma_tab = append(sigma_tab, sigma_comb)
-    print('The combined stress in one beam is' + divide(max(sigma_comb), sigma_y)*100 + 'percent the yield strength')
+    print('The combined stress in one beam is', divide(max(sigma_comb), sigma_y)*100, 'percent the yield strength')
     #Plot
     plt.plot(sigma_tab, y_arr)
+
+
+stress(276*10**6, 50/180*3.14159, 2.5*10**(-3), 5.21*10**(-7), -0.05, 0.05)
+
 
 # Make it so that we can plot it
