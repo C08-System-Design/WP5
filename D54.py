@@ -34,18 +34,19 @@ def stress(sigma_y, alpha, A, Ixx, y_min, y_max):
         axial_list.append(-F_axial)
         F_trans = sin(alpha)*Fz/8 + sin(pi/2-alpha)*F_lat[Forces]
         trans_list.append(F_trans)
-    array(axial_list)
+    axial_list = array(axial_list)
     array(trans_list)
-    M_int = multiply(trans_list, L) # array
+    M_int = multiply(trans_list, L) # array 1D
     #calc stress due to axial forces
     sigma_axial = divide(axial_list, A)
     #calc stress due to shear forces
     for i in y_arr:
-        sigma_shear = divide(multiply(M_int, i), Ixx)
-        sigma_comb = add(sigma_shear, sigma_axial)
+        sigma_shear = divide(multiply(M_int, i), Ixx) #shear stress 1D
+        sigma_comb = add(sigma_shear, sigma_axial) #comb stress 1D
         #define sigmatab!!!!
         sigma_tab = append(sigma_tab, sigma_comb)
-    print('The combined stress in one beam is' + sigma_comb/sigma_y*100 + 'percent the yield strength')
+    print('The combined stress in one beam is' + divide(max(sigma_comb), sigma_y)*100 + 'percent the yield strength')
     #Plot
     plt.plot(sigma_tab, y_arr)
+
 # Make it so that we can plot it
