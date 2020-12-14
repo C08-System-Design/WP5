@@ -43,15 +43,59 @@ def stress(sigma_y, alpha, A, Ixx, y_min, y_max):
     #calc stress due to shear forces
     for i in y_arr:
         sigma_shear = divide(multiply(M_int, i), Ixx) #shear stress 1D
-        sigma_comb = add(sigma_shear, sigma_axial) #comb stress 1D
+        sigma_comb = list(add(sigma_shear, sigma_axial)) #comb stress 1D
         #define sigmatab!!!!
-        sigma_tab = append(sigma_tab, sigma_comb)
+        sigma_tab.append(sigma_comb)
     print('The combined stress in one beam is', divide(max(sigma_comb), sigma_y)*100, 'percent the yield strength')
     #Plot
+    print(sigma_tab[0][0], y_arr)
+    plt.plot(sigma_tab[0], y_arr)
+    plt.show()
+
+
+
+def stress_simple(sigma_y, alpha, A, Ixx, y_min, y_max, F_lat):
+    #length beam
+    global sigma_comb
+    L = 0.774/cos(alpha)
+    y_arr = linspace(y_min, y_max, 11)
+    sigma_tab = []
+    # Minus because Compressive
+    F_axial = cos(alpha)*-Fz/8 + cos(pi/2-alpha)*F_lat/8
+    F_trans = sin(alpha)*Fz/8 + sin(pi/2-alpha)*F_lat/8
+    M_int = multiply(F_trans, L) # array 1D
+    #calc stress due to axial forces
+    sigma_axial = divide(F_axial, A)
+    #calc stress due to shear forces
+    for i in y_arr:
+        sigma_shear = divide(multiply(M_int, i), Ixx) #shear stress 1D
+        sigma_comb = add(sigma_shear, sigma_axial) #comb stress 1D
+        #define sigmatab!!!!
+        sigma_tab.append(sigma_comb)
+    max1 = [abs(max(sigma_tab)), abs(min(sigma_tab))]
+    print('The combined stress in one beam is', divide(max(max1), sigma_y)*100, 'percent the yield strength')
+    #Plot
     plt.plot(sigma_tab, y_arr)
+    print(sigma_axial)
 
-
-stress(276*10**6, 50/180*3.14159, 2.5*10**(-3), 5.21*10**(-7), -0.05, 0.05)
-
-
+    plt.axvline(linewidth=0.5, color='r')
+    plt.axhline(linewidth=0.5, color='r')
+    #plt.show()
 # Make it so that we can plot it
+
+
+
+
+def Ixxgen(a, b, r):
+    NA = ((2*b**2)/(3*pi)+b*r +r**2)/(r+b/2)
+    y_cilc = r - NA
+    y_ellips = 4*b/(3*pi)
+    Ixx = 0.25*pi*r**4 + y_cilc**2*pi*r**2 + pi*a*b**3/8 + y_ellips**2*pi*a*b/2
+    Aellipscirc = pi*r**2 + pi*a*b/2
+    y_max = b+2*r-NA
+    y_min = b+2*r-y_max
+    return Ixx, Aellipscirc, y_min, y_max
+
+Ixx, Aellipscirc, y_min, y_max = Ixxgen(0.02, 0.03, 0.02)
+
+stress_simple(276*10**6, 50/180*pi, Aellipscirc, Ixx, y_min, y_max, Fx)
