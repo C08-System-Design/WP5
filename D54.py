@@ -1,11 +1,14 @@
 from math import *
 from numpy import *
 import matplotlib.pyplot as plt
+from D53 import *
 # from ... import ...
 
-Fx = 1.5 * 3.125 * 9.81 * 180   # lateral Force (in N) in x direction
-Fy = 1.5 * 3.125 * 9.81 * 180   # lateral Force (in N) in y direction
-Fz = 7.5 * 3.125 * 9.81 * 180   # longitudinal Force (in N) in z direction
+tank_mass = buckling_opt(1590, R_lst, t_lst, L_lst, mat)[0][3]
+
+Fx = 1.5 * 3.125 * 9.81 * (180 + 9.05)  # lateral Force (in N) in x direction
+Fy = 1.5 * 3.125 * 9.81 * (180 + 9.05)  # lateral Force (in N) in y direction
+Fz = 7.5 * 3.125 * 9.81 * (180 + 9.05)  # longitudinal Force (in N) in z direction
 
 def xyResF(Fx, Fy):                                     # xy plane resultant force
     Fxy =  sqrt(Fx**2 + Fy**2)
@@ -53,16 +56,16 @@ def stress(sigma_y, alpha, A, Ixx, y_min, y_max):
     plt.show()
 
 
-
-def stress_simple(sigma_y, alpha, A, Ixx, y_min, y_max, F_lat):
+# for bottom beam i = -1 for top beam i = 1
+def stress_simple(sigma_y, alpha, A, Ixx, y_min, y_max, F_lat, i):
     #length beam
     global sigma_comb
     L = 0.774/cos(alpha)
     y_arr = linspace(y_min, y_max, 11)
     sigma_tab = []
     # Minus because Compressive
-    F_axial = cos(alpha)*-Fz/8 + cos(pi/2-alpha)*F_lat/8
-    F_trans = sin(alpha)*Fz/8 + sin(pi/2-alpha)*F_lat/8
+    F_axial = cos(alpha)*i*Fz/8 + cos(pi/2-alpha)*F_lat/8
+    F_trans = sin(alpha)*Fz/8 + sin(pi/2-alpha)*-i*F_lat/8
     M_int = multiply(F_trans, L) # array 1D
     #calc stress due to axial forces
     sigma_axial = divide(F_axial, A)
@@ -84,7 +87,7 @@ def stress_simple(sigma_y, alpha, A, Ixx, y_min, y_max, F_lat):
 # Make it so that we can plot it
 
 
-
+# TO DO: iterate the Ixxgen for increasing values of a b and r -> use the output and plug it into stress_simple -> check if value exceeds 100% if yes increase a/b/r if not save as possible configuration. Loop this for every tank configuration.
 
 def Ixxgen(a, b, r):
     NA = ((2*b**2)/(3*pi)+b*r +r**2)/(r+b/2)
