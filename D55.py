@@ -2,7 +2,7 @@ import sys
 import math
 from D52 import R_lst, t_lst, L_lst
 from mat import A2195_T84 as mat
-from D53_final import buckling_opt
+from D53 import buckling_opt
 
 
 def tankandbeam_opt(m_viable, beam_viable):
