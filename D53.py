@@ -97,3 +97,5 @@ a = buckling_opt(1590,R_lst, t_lst, L_lst, mat)
 print(a[1]) #optimal config
 print(a[2]) #number of failing configs
 '''
+
+print(buckling_opt(1600, R_lst, t_lst, L_lst, mat)[1])
