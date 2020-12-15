@@ -2,13 +2,20 @@ from math import *
 from numpy import *
 import matplotlib.pyplot as plt
 from D53 import *
+from mat import A2195_T84 as mat
 # from ... import ...
+
+sigmay = mat.get("sigma_y") * 10**6
 
 tank_mass = buckling_opt(1590, R_lst, t_lst, L_lst, mat)[0][3]
 
-Fx = 1.5 * 3.125 * 9.81 * (180 + 9.05)  # lateral Force (in N) in x direction
-Fy = 1.5 * 3.125 * 9.81 * (180 + 9.05)  # lateral Force (in N) in y direction
-Fz = 7.5 * 3.125 * 9.81 * (180 + 9.05)  # longitudinal Force (in N) in z direction
+beam_config_list = []
+
+def getForces(i):
+    Fx = 1.5 * 3.125 * 9.81 * (180 + tank_mass[i])  # lateral Force (in N) in x direction
+    Fy = 1.5 * 3.125 * 9.81 * (180 + tank_mass[i])  # lateral Force (in N) in y direction
+    Fz = 7.5 * 3.125 * 9.81 * (180 + tank_mass[i])  # longitudinal Force (in N) in z direction
+    return Fx, Fy, Fz
 
 def xyResF(Fx, Fy):                                     # xy plane resultant force
     Fxy =  sqrt(Fx**2 + Fy**2)
@@ -76,14 +83,18 @@ def stress_simple(sigma_y, alpha, A, Ixx, y_min, y_max, F_lat, i):
         #define sigmatab!!!!
         sigma_tab.append(sigma_comb)
     max1 = [abs(max(sigma_tab)), abs(min(sigma_tab))]
-    print('The combined stress in one beam is', divide(max(max1), sigma_y)*100, 'percent the yield strength')
-    #Plot
-    plt.plot(sigma_tab, y_arr)
-    print(sigma_axial)
+    stress_lvl = divide(max(max1), sigma_y)*100
+    # print('The combined stress in one beam is', stress_lvl, 'percent the yield strength')
 
-    plt.axvline(linewidth=0.5, color='r')
-    plt.axhline(linewidth=0.5, color='r')
+    #Plot
+    # plt.plot(sigma_tab, y_arr)
+    # print(sigma_axial)
+
+    # plt.axvline(linewidth=0.5, color='r')
+    # plt.axhline(linewidth=0.5, color='r')
     #plt.show()
+
+    return stress_lvl
 # Make it so that we can plot it
 
 
@@ -99,6 +110,40 @@ def Ixxgen(a, b, r):
     y_min = b+2*r-y_max
     return Ixx, Aellipscirc, y_min, y_max
 
-Ixx, Aellipscirc, y_min, y_max = Ixxgen(0.02, 0.03, 0.02)
+def increment(x, d):
+    x = x + d
+    return x
 
-stress_simple(276*10**6, 50/180*pi, Aellipscirc, Ixx, y_min, y_max, Fx)
+# Ixx, Aellipscirc, y_min, y_max = Ixxgen(0.02, 0.03, 0.02)
+
+# stress_simple(276*10**6, 50/180*pi, Aellipscirc, Ixx, y_min, y_max, Fx)
+
+# Guess for a b and r (always lower value than expected value)
+a, b, r = 0.003, 0.0075, 0.005
+
+# setting for load orientation
+o = 1
+
+previous = []
+i=0
+while i < len(tank_mass):
+    Fx, Fy, Fz = getForces(i)
+    Ixx, Aellipscirc, y_min, y_max = Ixxgen(a,b,r)
+    stress_lvl = stress_simple(sigmay, 50/180*pi, Aellipscirc, Ixx, y_min, y_max, Fx, o)
+    if stress_lvl > 100:
+        a = increment(a, 0.000000325)
+        b = increment(b, 0.000001)
+        r = increment(r, 0.0000005)
+    
+    if stress_lvl <= 100:
+        print(stress_lvl)
+        if [a,b,r] != previous:
+            beam_config_list.append([a, b ,r])
+        previous =[a, b, r]
+        a = 0.003
+        b = 0.0075
+        r = 0.005
+        i += 1
+
+print(beam_config_list)
+
