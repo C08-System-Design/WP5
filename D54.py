@@ -131,9 +131,9 @@ while i < len(tank_mass):
     Ixx, Aellipscirc, y_min, y_max = Ixxgen(a,b,r)
     stress_lvl = stress_simple(sigmay, 50/180*pi, Aellipscirc, Ixx, y_min, y_max, Fx, o)
     if stress_lvl > 100:
-        a = increment(a, 0.000000325)
-        b = increment(b, 0.000001)
-        r = increment(r, 0.0000005)
+        a = increment(a, 0.00000325)
+        b = increment(b, 0.00001)
+        r = increment(r, 0.000005)
     
     if stress_lvl <= 100:
         print(stress_lvl)
