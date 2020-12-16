@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 #constants
 c_1 = 0.002
-c_2 = 0.054
+c_2 = 0
 k = 5                               #equivalent stiffness
 m = 1500                            #mass, implement from other code
 omega_n = np.sqrt(m/k)              #natural angular frequency
@@ -25,7 +25,7 @@ t = np.arange(0,2,0.01) #get time steps for x axis
 hom = c_1 * omega_n * np.sin(omega_n * t) + c_2 * omega_n * np.cos(omega_n * t)
 
 #Particular solution
-f0 = 0.8*g*m
+f0 = 0.8*g
 Enumerator = (omega_n)*(omega_n) - (omega_f)*(omega_f)
 
 part = (f0/Enumerator) * np.sin(t * omega_f)
