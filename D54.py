@@ -6,6 +6,7 @@ from mat import A2195_T84 as mat
 # from ... import ...
 
 sigmay = mat.get("sigma_y") * 10**6
+rho = mat.get("rho") 
 
 tank_mass = buckling_opt(1590, R_lst, t_lst, L_lst, mat)[0][3]
 
@@ -32,7 +33,7 @@ def xyzResF(Fx, Fy, Fz):                     # xyz resultant force
 def angleLong(Fxy, Fz):                             
     angleRad = (0.5*pi) - atan(Fxy/Fz)
     angleDeg =  angleRad * (180/(pi))        # convert to degrees
-    return angleDeg
+    return angleRad
 
 #First attempt calculation(not used)
 def stress(sigma_y, alpha, A, Ixx, y_min, y_max):   
@@ -100,7 +101,7 @@ def stress_simple(sigma_y, alpha, A, Ixx, y_min, y_max, F_lat, Fz, i):
     # plt.axhline(linewidth=0.5, color='r')
     #plt.show()
 
-    return stress_lvl
+    return stress_lvl, L
 # Make it so that we can plot it
 
 
@@ -132,7 +133,7 @@ def getConfigs(load_ori):
         Ixx, Aellipscirc, y_min, y_max = Ixxgen(a,b,r)
         Fxy = xyResF(Fx, Fy)
         alpha = 0.5*pi - angleLong(Fxy, Fz)
-        stress_lvl = stress_simple(sigmay,alpha,Aellipscirc,Ixx,y_min,y_max,Fx,Fz,o)
+        stress_lvl, L = stress_simple(sigmay,alpha,Aellipscirc,Ixx,y_min,y_max,Fx,Fz,o)
         if stress_lvl > 100:
             a = increment(a, 0.00000325)
             b = increment(b, 0.00001)
@@ -140,7 +141,9 @@ def getConfigs(load_ori):
         
         if stress_lvl <= 100:
             if [a,b,r] != previous:
-                beam_config_list.append([a, b ,r])
+                print(L)
+                m = L * Aellipscirc * rho
+                beam_config_list.append([a, b ,r, m])
             previous =[a, b, r]
             a = 0.003
             b = 0.0075
