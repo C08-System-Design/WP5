@@ -147,7 +147,7 @@ def getConfigs(load_ori):
             #  print(L)
             m = L * Aellipscirc * rho
             # beam_config_list.append([a, b ,r, m])
-            beam_config_list.append(m)
+            beam_config_list.append([a,b,r,m,L,alpha])
             # previous =[a, b, r]
             a = 0.003
             b = 0.0075
