@@ -9,6 +9,7 @@ sigmay = mat.get("sigma_y") * 10**6
 rho = mat.get("rho") 
 
 tank_mass = buckling_opt(1590, R_lst, t_lst, L_lst, mat)[0][3]
+print(len(tank_mass))
 
 beam_config_list = []
 
@@ -74,7 +75,7 @@ def stress(sigma_y, alpha, A, Ixx, y_min, y_max):
 def stress_simple(sigma_y, alpha, A, Ixx, y_min, y_max, F_lat, Fz, i):
     #length beam
     global sigma_comb
-    L = 0.774/cos(alpha)
+    L = 0.774/sin(alpha)
     y_arr = linspace(y_min, y_max, 11)
     sigma_tab = []
     # Minus because Compressive
@@ -126,13 +127,15 @@ def getConfigs(load_ori):
     o = load_ori       
     # temp list to compare values to eliminate duplicates 
     # reducing the amount of configurations significantly                                             
-    previous = []                                               
+    # previous = []                                               
     i=0
     while i < len(tank_mass):
+        print(i)
         Fx, Fy, Fz = getForces(i)
         Ixx, Aellipscirc, y_min, y_max = Ixxgen(a,b,r)
         Fxy = xyResF(Fx, Fy)
         alpha = 0.5*pi - angleLong(Fxy, Fz)
+        # print(alpha)
         stress_lvl, L = stress_simple(sigmay,alpha,Aellipscirc,Ixx,y_min,y_max,Fx,Fz,o)
         if stress_lvl > 100:
             a = increment(a, 0.00000325)
@@ -140,11 +143,12 @@ def getConfigs(load_ori):
             r = increment(r, 0.000005)
         
         if stress_lvl <= 100:
-            if [a,b,r] != previous:
-                print(L)
-                m = L * Aellipscirc * rho
-                beam_config_list.append([a, b ,r, m])
-            previous =[a, b, r]
+            # if [a,b,r] != previous:
+            #  print(L)
+            m = L * Aellipscirc * rho
+            # beam_config_list.append([a, b ,r, m])
+            beam_config_list.append(m)
+            # previous =[a, b, r]
             a = 0.003
             b = 0.0075
             r = 0.005
@@ -152,4 +156,7 @@ def getConfigs(load_ori):
     
     return beam_config_list
 
-print(getConfigs(1))
+# result = getConfigs(1)
+# print(result)
+# print(len(result))
+# print(len(getConfigs(1)))
