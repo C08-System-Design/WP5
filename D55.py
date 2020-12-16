@@ -8,8 +8,13 @@ from mat import A2195_T84 as mat
 from D53 import buckling_opt
 from D54 import getConfigs
 
-m_viable = buckling_opt(1590,R_lst, t_lst, L_lst, mat)[0][3]       #get the tank mass list from D53
-beam_viable = getConfigs(1)                                        #get the beam mass list from D54
+
+
+def format_list(beam_configurations):
+    cor_list = []
+    for i in range(len(m_viable)):
+        cor_list.append(beam_configurations[i][3])
+    return cor_list
 
 def tankandbeam_opt(m_viable, beam_viable):
     viable_list = buckling_opt(1590, R_lst, t_lst, L_lst, mat)[0]  #get list of all dimensions
@@ -37,5 +42,10 @@ def tankandbeam_opt(m_viable, beam_viable):
     return(m_min, L_min, R_min, t_min, m_min_index)
 
 
+m_viable = buckling_opt(1590,R_lst, t_lst, L_lst, mat)[0][3]       #get the tank mass list from D53
+beam_configurations = getConfigs(1)
+beam_viable = format_list(beam_configurations)                     #get the beam mass list from D54
 
 print(tankandbeam_opt(m_viable, beam_viable))
+
+
