@@ -130,7 +130,7 @@ def getConfigs(load_ori):
     # previous = []                                               
     i=0
     while i < len(tank_mass):
-        print(i)
+        # print(i)
         Fx, Fy, Fz = getForces(i)
         Ixx, Aellipscirc, y_min, y_max = Ixxgen(a,b,r)
         Fxy = xyResF(Fx, Fy)
