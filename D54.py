@@ -136,7 +136,7 @@ def getConfigs(load_ori):
         Fxy = xyResF(Fx, Fy)
         alpha = 0.5*pi - angleLong(Fxy, Fz)
         # print(alpha)
-        stress_lvl, L = stress_simple(sigmay,alpha,Aellipscirc,Ixx,y_min,y_max,Fx,Fz,o)
+        stress_lvl, L = stress_simple(sigmay,80/180*pi,Aellipscirc,Ixx,y_min,y_max,Fx,Fz,o)
         if stress_lvl > 100:
             a = increment(a, 0.00000325)
             b = increment(b, 0.00001)
