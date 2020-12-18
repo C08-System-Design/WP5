@@ -43,4 +43,6 @@ R_new = elongate(R)[0]
 L = elongate(R)[1]
 print(get_sphere_mass(R_new, P, mat)+get_cylinder_mass(R_new, L, get_hoop_t(R, P, mat)))
 
+print(get_sphere_mass(0.34961345684772915, P, mat))
+
 
