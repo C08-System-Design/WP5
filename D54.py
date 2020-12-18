@@ -9,7 +9,9 @@ sigmay = mat.get("sigma_y") * 10**6
 rho = mat.get("rho") 
 
 tank_mass = buckling_opt(1590, R_lst, t_lst, L_lst, mat)[0][3]
-print(len(tank_mass))
+tank_radius = buckling_opt(1590, R_lst, t_lst, L_lst, mat)[0][0]
+
+# print(len(tank_mass))
 
 beam_config_list = []
 
@@ -72,10 +74,11 @@ def stress(sigma_y, alpha, A, Ixx, y_min, y_max):
 
 
 # for bottom beam i = -1 for top beam i = 1
-def stress_simple(sigma_y, alpha, A, Ixx, y_min, y_max, F_lat, Fz, i):
+def stress_simple(sigma_y, alpha, A, Ixx, y_min, y_max, F_lat, Fz, i, c):
     #length beam
     global sigma_comb
-    L = 0.774/sin(alpha)
+    L = (1.024-tank_radius[c])/sin(alpha)
+    # print(1.024-tank_radius[c])
     y_arr = linspace(y_min, y_max, 11)
     sigma_tab = []
     # Minus because Compressive
@@ -130,13 +133,13 @@ def getConfigs(load_ori):
     # previous = []                                               
     i=0
     while i < len(tank_mass):
-        print(i)
+        # print(i)
         Fx, Fy, Fz = getForces(i)
         Ixx, Aellipscirc, y_min, y_max = Ixxgen(a,b,r)
         Fxy = xyResF(Fx, Fy)
         alpha = 0.5*pi - angleLong(Fxy, Fz)
         # print(alpha)
-        stress_lvl, L = stress_simple(sigmay,alpha,Aellipscirc,Ixx,y_min,y_max,Fx,Fz,o)
+        stress_lvl, L = stress_simple(sigmay,80/180*pi,Aellipscirc,Ixx,y_min,y_max,Fx,Fz,o,i)
         if stress_lvl > 100:
             a = increment(a, 0.00000325)
             b = increment(b, 0.00001)
