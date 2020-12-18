@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 #constants
 c_2 = 0
-m = 1500                            #mass, implement from other code
+m = 1600                            #mass, implement from other code
 omega_n = 2049                      #natural angular frequency
 f = 100                             #forcing frequency, given
 omega_f = 2*f*np.pi                 #angular forcing frequency
@@ -20,7 +20,7 @@ c_1 = (-0.8*g * (omega_f / omega_n)) / ((omega_n)**2 - (omega_f)**2)
 
 
 #X axis values
-t = np.arange(0,2,0.1) #get time steps for x axis
+t = np.arange(0,0.02,0.0005) #get time steps for x axis
 
 
 #Homogeneous solution
@@ -47,20 +47,20 @@ plt.ylabel('displacement [m]')
 plt.title("Total displacement graph")
 plt.show()
 
-'''Homog displacement'''
-plt.figure()
-plt.plot(t,hom)
-#Naming
-plt.xlabel('time [s]') 
-plt.ylabel('displacement [m]')
-plt.title("Homogeneous solution")
-plt.show()
-
-'''Particular displacement'''
-plt.figure()
-plt.plot(t,part)
-#Naming
-plt.xlabel('time [s]') 
-plt.ylabel('displacement [m]')
-plt.title("Particular solution")
-plt.show()
+##'''Homog displacement'''
+##plt.figure()
+##plt.plot(t,hom)
+###Naming
+##plt.xlabel('time [s]') 
+##plt.ylabel('displacement [m]')
+##plt.title("Homogeneous solution")
+##plt.show()
+##
+##'''Particular displacement'''
+##plt.figure()
+##plt.plot(t,part)
+###Naming
+##plt.xlabel('time [s]') 
+##plt.ylabel('displacement [m]')
+##plt.title("Particular solution")
+##plt.show()
