@@ -5,11 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #constants
-c_1 = 0.002
 c_2 = 0
-k = 5                               #equivalent stiffness
 m = 1500                            #mass, implement from other code
-omega_n = np.sqrt(m/k)              #natural angular frequency
+omega_n = 2049                      #natural angular frequency
 f = 100                             #forcing frequency, given
 omega_f = 2*f*np.pi                 #angular forcing frequency
 g = 9.81                            #grav acceleration
@@ -17,8 +15,12 @@ g = 9.81                            #grav acceleration
 print(omega_n)
 print(omega_f)
 
+#calc coefficient
+c_1 = (-0.8*g * (omega_f / omega_n)) / ((omega_n)**2 - (omega_f)**2)
+
+
 #X axis values
-t = np.arange(0,2,0.01) #get time steps for x axis
+t = np.arange(0,2,0.1) #get time steps for x axis
 
 
 #Homogeneous solution
