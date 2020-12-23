@@ -23,7 +23,7 @@ def get_sphere_volume(r):
 
 def elongate(r):
     v1 = get_sphere_volume(r)
-    r_new = r - 0.1
+    r_new = r - 0.01
     v2 = get_sphere_volume(r_new)
     v3 = v1 - v2
     L = v3 / (np.pi*r_new**2)
